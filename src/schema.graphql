@@ -1,0 +1,26 @@
+type Rock {
+  id: ID!
+  name: String!
+  description: String!
+  stock: Float!
+  birthstone: String
+  color: [String!]!
+}
+
+type Admin {
+  id: ID!
+  email: String!
+  password: String!
+}
+
+type Query {
+  info: String!
+  rock(id: ID!): Rock
+  rocks: [Rock!]
+}
+
+type Mutation {
+  createRock(name: String, description: String!, stock: Float!, birthstone: String, color: [String!]!): Rock
+  updateRock(id: ID!, name: String, description: String!, stock: Float!, birthstone: String, color: [String!]!): Rock
+  deleteRock(id: ID!): Rock
+}
