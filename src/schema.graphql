@@ -1,5 +1,5 @@
 type Rock {
-  id: ID!
+  _id: ID!
   name: String!
   description: String!
   stock: Float!
@@ -15,7 +15,7 @@ type Admin {
 
 type Query {
   info: String!
-  rock(id: ID!): Rock
+  rock(_id: ID!): Rock
   rocks: [Rock!]
 }
 

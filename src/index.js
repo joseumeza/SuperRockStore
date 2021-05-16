@@ -1,64 +1,28 @@
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
 const path = require('path');
-const { allRocks } = require('./allRocks')
-const {Rock} = require('./models/rock')
-
+const { allRocks } = require('./allRocks');
+const Query = require('./resolvers/Query');
+const Mutations = require('./resolvers/Mutations');
 const mongoose = require('mongoose');
+const {Rock} = require('./models/rock');
 
 
 mongoose.connect('mongodb+srv://admin-jose:Test123@cluster0.rhgi6.mongodb.net/RockDB?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true })
 
+// let newRock = new Rock({
+//         name: `Lapis Lazuli`,
+//         description: `Lapis Lazuli is one of the most sought after stones in use since man’s history began. Its deep, celestial blue remains the symbol of royalty and honor, gods and power, spirit and vision. It is a universal symbol of wisdom and truth.`,
+//         stock: 35,
+//         birthstone: '',
+//         color: ['blue']
+// })
 
-
+// newRock.save();
 let rockCount = 1;
 const resolvers = {
-    Query: {
-        info: () => 'This is a page for a rock store',
-        rocks: () => allRocks,
-        rock: (parent, args) => {
-            for( let x = 0; x < allRocks.length; x++) {
-                if(allRocks[x].id === args.id) {
-                    return allRocks[x]
-                }
-            }
-            return null
-        }
-
-    },
-    Mutation: {
-        createRock: (parent, args) => {
-            const rock = {
-                ...args,
-                id: `rock-${rockCount++}`
-            }
-            allRocks.push(rock)
-            return rock
-        },
-        updateRock: (parent, args) => {
-            for(let x = 0; x < allRocks.length; x++) {
-                if(allRocks[x].id === args.id) {
-                    allRocks[x] = {
-                        ...args
-                    }
-                    return allRocks[x]
-                }
-            }
-            return null;
-        },
-        deleteRock: (parent, args) => {
-            for(let x = 0; x < allRocks.length; x++) {
-                if(allRocks[x].id === args.id) {
-                    let swap = allRocks[x];
-                    allRocks[x] = allRocks[allRocks.length - 1]
-                    allRocks.pop()
-                    return swap
-                }
-            }
-            return null;
-
-        }
-    }
+    Query: Query, 
+    Mutation: Mutations,
 }
 
 
