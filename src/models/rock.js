@@ -22,6 +22,9 @@ const rockSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  image: {
+    type: String
+  }
 })
 
 exports.Rock = new mongoose.model('rock', rockSchema)
