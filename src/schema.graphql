@@ -2,9 +2,39 @@ type Rock {
   _id: ID!
   name: String!
   description: String!
-  stock: Float!
-  birthstone: String
-  color: [String!]!
+  stock: Int!
+  birthstone: Months!
+  image: String!
+  color: [Colors!]!
+}
+
+enum Months {
+  JANUARY
+  FEBRUARY
+  MARCH
+  APRIL
+  MAY
+  JUNE
+  JULY
+  AUGUST
+  SEPTEMBER
+  OCTOBER
+  NOVEMBER
+  DECEMBER
+}
+
+enum Colors {
+  RED
+  ORANGE
+  YELLOW
+  GREEN
+  BLUE
+  INDIGO
+  VIOLET
+  BLACK
+  WHITE
+  GREY
+  ALL
 }
 
 type Admin {
@@ -15,12 +45,13 @@ type Admin {
 
 type Query {
   info: String!
-  rock(_id: ID!): Rock
-  rocks: [Rock!]
+  getRockById(_id: ID!): Rock
+  getRock(_id: ID, description: String, stock: Int, birthstone: Months, color: [Colors!]): Rock
+  getAllRocks: [Rock!]
 }
 
 type Mutation {
-  createRock(name: String, description: String!, stock: Float!, birthstone: String, color: [String!]!): Rock
-  updateRock(id: ID!, name: String, description: String!, stock: Float!, birthstone: String, color: [String!]!): Rock
-  deleteRock(id: ID!): Rock
+  createRock(name: String, description: String!, stock: Int!, birthstone: Months, image: String, color: [Colors!]!): Rock
+  updateRockById(_id: ID!, name: String, description: String, stock: Int, birthstone: String, image: String, color: [Colors!]): Rock
+  deleteRockById(_id: ID!): Rock
 }
